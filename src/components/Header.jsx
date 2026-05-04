@@ -1,6 +1,7 @@
-import styled from 'styled-components'
-import logo from '../assets/icons/logo.svg'
-import menuHamburger from '../assets/icons/menu-hamburger-icon.svg'
+import { useState } from 'react';
+import styled from 'styled-components';
+import logo from '../assets/icons/logo.svg';
+import menuAside from '../assets/icons/menu-aside-icon.svg';
 
 const StyledHeader = styled.header`
     display: flex;
@@ -8,21 +9,25 @@ const StyledHeader = styled.header`
     justify-content: space-between;
     position: fixed;
     top: 0;
-
-    padding: 0px 48px 0px 48px;
-
+    left: 0;
+    padding: 0px 48px;
     width: 100%;
     height: 107px;
-
     font-size: 15px;
-    font-weight: Medium;
+    font-weight: 500; 
     color: var(--neutral-200);
-
     background-color: var(--header-background);
+    z-index: 1000;
 
     img {
         width: 160px;
         height: 40px;
+    }
+
+    ul {
+        list-style: none; 
+        padding: 0;
+        margin: 0;
     }
 
     .navigation ul {
@@ -31,54 +36,89 @@ const StyledHeader = styled.header`
         gap: 32px;    
     }
 
-    .common-link { color: var(--neutral-200) }
+    .common-link { color: var(--neutral-200); text-decoration: none; }
     .common-link:hover { color: var(--hover-neutral-200); }
-    .common-link:active { color: var(--active-neutral-200) }
 
-    .portfolio-link { color: var(--tertiary-color); }   
+    .portfolio-link { color: var(--tertiary-color); text-decoration: none; }   
     .portfolio-link:hover { color: var(--blue-hover); }
-    .portfolio-link:active { color: var(--blue-active); }
 
     .start-button {
         background-color: var(--tertiary-color);
         color: var(--neutral-100);
-
         width: 85px;
         height: 43px;
-
         border-radius: 6px;
-
         display: inline-block;
         text-align: center;
         line-height: 43px;
+        text-decoration: none;
     }
 
-    .start-button:hover { background-color: var(--blue-hover); }
-    .start-button:active { background-color: var(--blue-active); }
-
-    .hamburger-menu { display: none; }
+    .aside-menu { display: none; }
 
     @media (max-width: 768px) {
+        padding: 0 20px;
 
-        nav { display: none; }
+        .navigation { display: none; }
 
-        .hamburger-menu {
+        .aside-menu {
             display: flex;
-            
             width: 43px;
-
             cursor: pointer;
             background: none;
             border: none;
         }
-
-        .hamburger-menu:hover img { filter: brightness(0.8); }
-        .hamburger-menu:active img { filter: brightness(0.6); }
     }
 
+    .aside-container {
+        display: flex;
+        position: fixed;
+        top: 107px;
+        right: 0;
+        left: 0;
+
+        width: 100%;
+        height: calc(100vh - 107px);
+        background-color: var(--header-background);
+        padding: 48px 40px;
+        font-size: 24px;
+
+        transform: translateX(100%);
+        transition: transform 0.35s ease, visibility 0s 0.35s;
+        visibility: hidden;
+    }
+
+    .aside-container.show {
+        transform: translateX(0);
+        transition: transform 0.35s ease, visibility 0s 0s;
+        visibility: visible;
+    }
+
+    .aside-container ul {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+        width: 100%;
+    }
+
+    .aside-container .start-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 48px;
+        line-height: normal;
+        font-size: 24px;
+    }
 `;
 
 export default function Header() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    function toggleMenu() {
+        setIsMenuOpen(!isMenuOpen);
+    }
 
     return (
         <StyledHeader>
@@ -86,17 +126,27 @@ export default function Header() {
 
             <nav className='navigation'>
                 <ul>
-                    <li><a href="" className='common-link'>Home</a></li>
-                    <li><a href="" className='common-link'>Contato</a></li>
-                    <li><a href="" className='portfolio-link'>Portfolio</a></li>
-                    <li><a href="" className='start-button'>Começar</a></li>
+                    <li><a href="#" className='common-link'>Home</a></li>
+                    <li><a href="#" className='common-link'>Contato</a></li>
+                    <li><a href="#" className='portfolio-link'>Portfolio</a></li>
+                    <li><a href="#" className='start-button'>Começar</a></li>
                 </ul>
             </nav>
 
-            <button className='hamburger-menu'>
-                <img src={menuHamburger} alt="Menu" />
+            <button className='aside-menu' onClick={toggleMenu}>
+                <img src={menuAside} alt="Menu" />
             </button>
 
+            <div className={`aside-container ${isMenuOpen ? 'show' : ''}`}>
+                <nav>
+                  <ul>
+                    <li><a href="#" className='common-link'>Home</a></li>
+                    <li><a href="#" className='common-link'>Contato</a></li>
+                    <li><a href="#" className='portfolio-link'>Portfolio</a></li>
+                        <li><a href="#" className='start-button'>Começar</a></li>
+                  </ul>
+                </nav>
+            </div>
         </StyledHeader>         
-    )
+    );
 }
