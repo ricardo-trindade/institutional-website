@@ -6,7 +6,7 @@ const StyledHero = styled.section`
     align-items: center;
     justify-content: center;
 
-    width: 100%;
+    width: 100vw;
     height: 485px;
 
     h1 {
@@ -15,6 +15,17 @@ const StyledHero = styled.section`
         text-align: center;
         color: var(--neutral-100);
         line-height: 83px;
+        padding: 0 24px;
+    }
+
+    @media (max-width: 768px) {
+        height: auto;
+        padding: 60px 0;
+
+        h1 {
+            font-size: clamp(32px, 10vw, 56px);
+            line-height: 1.2;
+        }
     }
 `
 
