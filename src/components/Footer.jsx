@@ -9,7 +9,7 @@ const StyledFooter = styled.footer`
     width: 100%;
     height: 102px;
 
-    padding: 0px 48px 0px 48px;
+    padding: 0 48px;
 
     .copyright {
         font-size: 14px;
@@ -22,7 +22,18 @@ const StyledFooter = styled.footer`
         align-items: center;
         flex-direction: row;
         gap: 24px;
+    }
+
+    li > a {
         color: var(--neutral-200);
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        height: auto;
+        padding: 32px 20px;
+        gap: 20px;
+        text-align: center;
     }
 `
 
