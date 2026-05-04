@@ -10,7 +10,8 @@ const StyledCallToAction = styled.section`
     text-align: center;
 
     width: 100%;
-    height: 520px;
+    min-height: 520px;
+    padding: 80px 48px;
 
     background-color: var(--secondary-color);
 
@@ -24,6 +25,23 @@ const StyledCallToAction = styled.section`
         color: var(--neutral-200);
         font-size: 18px;
         font-weight: 400;
+        max-width: 600px;
+    }
+
+    @media (max-width: 768px) {
+        padding: 60px 24px;
+        min-height: unset;
+
+        .h2-call-to-action {
+            font-size: clamp(28px, 8vw, 40px);
+            line-height: 1.2;
+        }
+
+        .invite {
+            font-size: 16px;
+        }
+
+        br { display: none; }
     }
 
     .start-a-project {
